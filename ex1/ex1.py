@@ -1,28 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import constants as const
+import util as util
 
-# basic functions
-def elementAt(it, n):
-    return next((x for i,x in enumerate(it) if i==n), None)
-
-# constants
-C = 9.96 * np.power(10, 6)
-emissivity = 0.62
-boltz = 5.67 * np.power(10.0,-8)
-S = 1367
-albedo = 0.3
+printArrays = False
 
 # time series definition
 t0 = 0
 T = 100
 n = 100
 y0 = 20
-
-c1 = 1 / (4*C)
-c2 = boltz * emissivity / C
+c1 = 1 / (4*const.C)
+c2 = const.boltz * const.emissivity / const.C
 delta_t = (T - t0) / n
 def f(y, t):
-    return c1 * S * (1 - albedo) - c2 * np.power(y, 4)
+    return c1 * const.S * (1 - const.albedo) - c2 * np.power(y, 4)
 def t(i): # t is not implemented as a generator because every step just adds delta_t
     return t0 + delta_t * i
 def y():
@@ -33,14 +25,13 @@ def y():
         last_y = next_y
 
 # create arrays from functions
-y_cache = np.empty(n)
-for i, el in enumerate(y()): y_cache[i] = el
-t_cache = []
-for i in range(0, n): t_cache.append(t(i))
+y_cache = util.createArray(y(), lambda x: x)
+t_cache = util.createArray(range(0, n), lambda x: t(x))
 
 # print arrays
-for i in range(0, n - 1):
-    print(t_cache[i], y_cache[i])
+if printArrays:
+    for i in range(0, n - 1):
+        print(t_cache[i], y_cache[i])
 
 # plot arrays
 plt.plot(t_cache, y_cache)
