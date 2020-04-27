@@ -28,7 +28,7 @@ if algId == 0:
     T = 50000000
     y0 = [20]
     delta_t = (T - t0) / n
-    ts = list(map(lambda x: t(x, t0, delta_t), range(0, n + 1)))
+    ts = list(map(lambda x: t(x, t0, delta_t), range(0, n)))
     def phi(t, yk, f, delta_t):
         return f(yk, t)
     c1 = 1 / (4*const.C)
@@ -50,10 +50,10 @@ if algId == 1:
     gamma = 0.1
     delta = 0.1
     half_life = 0.1
-    mü = 0.1
+    mu = 0.1
     loopRe = timeLoop(lambda t, yk, f, delta_t: f(yk, t), 
                       lambda y, t: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
-                                    y[1] * (delta * y[0] - gamma - mü * y[1])], 
+                                    y[1] * (delta * y[0] - gamma - mu * y[1])], 
                       t0, T, y0, [], n)
     ys = list(loopRe)
 if algId == 2:
@@ -69,10 +69,10 @@ if algId == 2:
     gamma = 0.1
     delta = 0.1
     half_life = 0.1
-    mü = 0.1
+    mu = 0.1
     loopRe = timeLoop(lambda t, yk, f, delta_t: np.power(f(yk, t), 2), 
                       lambda y, t: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
-                                    y[1] * (delta * y[0] - gamma - mü * y[1])], 
+                                    y[1] * (delta * y[0] - gamma - mu * y[1])], 
                       t0, T, y0, [], n)
     ys = list(loopRe)
 
