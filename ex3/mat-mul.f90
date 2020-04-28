@@ -1,7 +1,7 @@
-program matMul
+program mkliMatMul
 
     CHARACTER(LEN=15) :: arg
-    real(8), allocatable :: A(:,:), x(:), R(:,:)
+    real(8), allocatable :: A(:,:), x(:), R(:)
     integer :: n, i, j, sum
     real :: t1, t2
     
@@ -10,7 +10,7 @@ program matMul
     
     allocate(A(n,n))
     allocate(x(n))
-    allocate(R(n,n))
+    allocate(R(n))
     
     call random_number(A)
     call random_number(x)
@@ -18,7 +18,13 @@ program matMul
     
     call cpu_time(t1)
     
-    R = MATMUL(A, A)
+    ! do i = 1, n
+        ! do j = 1, n
+            ! R(i) = R(i) + A(j, i) * x(j)
+        ! enddo
+    ! enddo
+    
+    R = MATMUL(A, x)
   
     call cpu_time(t2)
     
@@ -28,4 +34,4 @@ program matMul
     
     write(*,*) 'cputime = ', t2-t1
     
-end program matMul
+end program mkliMatMul
