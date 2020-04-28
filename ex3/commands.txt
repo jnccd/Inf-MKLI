@@ -1,0 +1,4 @@
+
+gfortran mat-mul.f90 -o mat-mul.exe -fbounds-check && ./mat-mul.exe 5
+
+gfortran predator-prey.f90 -o predator-prey.exe -fbounds-check && ./predator-prey.exe 5
