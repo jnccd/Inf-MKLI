@@ -18,13 +18,13 @@ program mkliMatMul
     
     call cpu_time(t1)
     
-    ! do i = 1, n
-        ! do j = 1, n
-            ! R(i) = R(i) + A(j, i) * x(j)
-        ! enddo
-    ! enddo
+    do j = 1, n
+        do i = 1, n
+            R(i) = R(i) + A(j, i) * x(j)
+        enddo
+    enddo
     
-    R = MATMUL(A, x)
+    !R = MATMUL(A, x)
   
     call cpu_time(t2)
     

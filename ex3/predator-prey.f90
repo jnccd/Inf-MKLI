@@ -28,6 +28,9 @@ program predatorPrey
     open(unit = 20, file = 'pp.txt', action = 'write')
     write(20,*) Predator
     write(20,*) Prey
-
     close(20)
+
+    deallocate(Predator)
+    deallocate(Prey)
+
 end program predatorPrey
