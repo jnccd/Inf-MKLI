@@ -20,7 +20,7 @@ def timeLoop(phi, f, t0, T, y0, p, n):
         yk = yk_next
 
 # Change this to swap algs
-algId = 2
+algId = 1
 
 if algId == 0:
     # Energy Balance Model
