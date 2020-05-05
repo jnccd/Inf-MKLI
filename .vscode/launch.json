@@ -15,6 +15,18 @@
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
-       }
+       },
+       {
+        "name": ".NET Core ex 4",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build ex4",
+        "program": "${workspaceFolder}/ex4/c#/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
+         "args": [],
+         "cwd": "${workspaceFolder}/ex4/c#",
+         // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+         "console": "internalConsole",
+         "stopAtEntry": false
+    }
     ]
 }

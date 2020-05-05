@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "LD+eQcb9w90OQuj4+vE6dcmwS/Pvy2CblPeQHP0NcuQ5jfNaIN3kaLr8Df+3aPCFjmhMUAXrMEJjUxwx1FHnFw==",
+  "success": true,
+  "projectFilePath": "D:\\Eigene-Dateien\\Programmieren\\Git\\mkli\\ex4\\c#\\coreFormsTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\One\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\One\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\One\\.nuget\\packages\\runtime.osx.10.10-x64.corecompat.system.drawing\\5.8.64\\runtime.osx.10.10-x64.corecompat.system.drawing.5.8.64.nupkg.sha512",
+    "C:\\Users\\One\\.nuget\\packages\\scottplot\\4.0.29\\scottplot.4.0.29.nupkg.sha512",
+    "C:\\Users\\One\\.nuget\\packages\\scottplot.winforms\\4.0.29\\scottplot.winforms.4.0.29.nupkg.sha512",
+    "C:\\Users\\One\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
