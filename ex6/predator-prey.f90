@@ -50,8 +50,6 @@ program predatorPrey
     enddo
     D = (constK / (h*h)) * D
     
-    call cpu_time(t1)
-
     ! Init box vectors
     Predator = 0.1
     Prey = 0.2
@@ -59,6 +57,8 @@ program predatorPrey
         Prey(i) = i / Real(bigN) * 0.1
         Predator(i) = i / Real(bigN) * 0.1 + 0.2
     enddo
+
+    call omp_get_wtime(t1)
 
     ! time loop, predator prey \w diffusion
     do i = 1, n
@@ -77,7 +77,7 @@ program predatorPrey
         !$OMP END PARALLEL DO
     enddo
 
-    call cpu_time(t2)
+    call omp_get_wtime(t2)
     write(*,*) 'cputime = ', t2-t1
     
     ! write results
