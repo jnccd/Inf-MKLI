@@ -1,10 +1,13 @@
 program predatorPrey
     use mod_precision
+    use omp_lib
     
     CHARACTER(LEN=15) :: arg
     real(kind=wp), allocatable :: Predator(:), Prey(:), D(:,:), tmp(:)
-    integer :: n, bigN, i, j, sum, t0 = 0, T = 15, cpuT1, cpuT2
+    integer :: n, bigN, i, j, sum, t0 = 0, T = 15
     real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    real :: cpuT1, cpuT2, t1, t2
+    INTEGER*8 :: st1, st2
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
     namelist/ spatial_parameters/ kappaInverted, bigN
@@ -58,27 +61,33 @@ program predatorPrey
         Predator(i) = i / Real(bigN) * 0.1 + 0.2
     enddo
 
-    call omp_get_wtime(t1)
+    call cpu_time(cpuT1)
+    t1 = omp_get_wtime()
+    call system_clock(st1)
 
     ! time loop, predator prey \w diffusion
     do i = 1, n
         tmp = MATMUL(D, Prey)
-        !$OMP PARALLEL DO
+        !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Prey(j) = Prey(j) + delta_T * (tmp(j) + Prey(j) * (alpha - beta * Predator(j) - lambda * Prey(j)))
             end do
         !$OMP END PARALLEL DO
         
         tmp = MATMUL(D, Predator)
-        !$OMP PARALLEL DO
+        !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Predator(j) = Predator(j) + delta_T * (tmp(j) + Predator(j) * (delta * Prey(j) - gamma - mu * Predator(j)))
             end do
         !$OMP END PARALLEL DO
     enddo
 
-    call omp_get_wtime(t2)
-    write(*,*) 'cputime = ', t2-t1
+    call system_clock(st2)
+    t2 = omp_get_wtime()
+    call cpu_time(cpuT2)
+    write(*,*) 'omp_get_wtime = ', t2-t1
+    write(*,*) 'cputime = ', cpuT2-cpuT1
+    write(*,*) 'time = ', st2-st1
     
     ! write results
     open(unit = 20, file = 'outfile.txt', action = 'write')

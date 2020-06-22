@@ -3,13 +3,13 @@ program predatorPrey
     CHARACTER(LEN=15) :: arg
     real(16), allocatable :: Predator(:), Prey(:), LastPredator(:), LastPrey(:), D(:,:), DiffPredator(:), DiffPrey(:)
     integer :: n, bigN, i, j, sum, t0 = 0, T = 15
-    real(16) :: alpha = 2, beta = 1, gamma = 1, delta = 3, lambda = 1, mu = 1, constK = 0.01, epsilon = 0.0001, delta_T, h
+    real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 1, mu = 1, constK = 0.1, epsilon = 0.0001, delta_T, h
     real(16), parameter :: PI_16 = 4 * atan (1.0_16)
     logical :: improvedEuler = .true.
     
     bigN = 100
-    n = 4 * bigN*bigN * constK * T
-    delta_t = 0.001
+    n = 10000
+    delta_t = 0.0001
     h = 1.0 / Real(bigN)
 
     print *, n
