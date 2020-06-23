@@ -17,7 +17,6 @@ program predatorPrey
     read(30, nml = time_parameters)
     close(30)
 
-    constK = 1 / real(kappaInverted)
     t0 = tZero
     delta_T = dt
 
@@ -25,7 +24,7 @@ program predatorPrey
 
     print *, 'n = ', n
     print *, 'delta_t = ', delta_t
-    print *, 'wp = ', wp
+    print *, 'alpha = ', alpha
 
     allocate(Predator(bigN))
     allocate(Prey(bigN))
