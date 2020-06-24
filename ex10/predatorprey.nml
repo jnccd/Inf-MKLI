@@ -1,7 +1,7 @@
 ! namelist for numerical simulation of the predator prey model
 &model_parameters
-alpha = 20.0
-beta = 1.0
+alpha = 8.0
+beta = 10.0
 gamma = 1.0
 delta = 3.0
 lambda = 1.0

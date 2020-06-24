@@ -23,9 +23,9 @@ dt = 0.01
 /
 '''
 
-intrStart = 0
-intrEnd = 20
-runs = 50
+intrStart = 5
+intrEnd = 8
+runs = 200
 outFileText = []
 outputVals = []
 
@@ -49,7 +49,7 @@ for i in range(runs):
 
 # plot
 print(boxes)
-plt.plot(list(map(lambda i: getAlpha(i), range(runs))), list(map(lambda x: x[i], outputVals)))
+plt.plot(list(map(lambda i: getAlpha(i), range(runs))), list(map(lambda x: x[0], outputVals)))
 plt.title("Ensemble run")
 plt.xlabel("Alpha")
 plt.ylabel("x(T)")
