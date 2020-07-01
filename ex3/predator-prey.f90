@@ -13,18 +13,21 @@ program predatorPrey
     print *, n
     print *, delta_T
 
+    ! Init Vectors
     allocate(Predator(n))
     allocate(Prey(n))
 
     Predator(1) = 1
     Prey(1) = 2
 
+    ! explicit euler loop
     do i = 2, n
         Predator(i) = Predator(i - 1) + delta_T * Predator(i - 1) * (alpha - beta * Prey(i - 1) - half_life * Predator(i - 1))
         
         Prey(i) = Prey(i - 1) + delta_T * Prey(i - 1) * (delta * Predator(i - 1) - gamma - mu * Prey(i - 1))
     enddo
     
+    ! write output
     open(unit = 20, file = 'pp.txt', action = 'write')
     write(20,*) Predator
     write(20,*) Prey

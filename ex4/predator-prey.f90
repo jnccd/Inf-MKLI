@@ -5,7 +5,7 @@ program predatorPrey
     integer :: n, bigN, i, j, sum, t0 = 0, T = 15
     real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
     
-    bigN = 100
+    bigN = 200
     n = 4 * bigN*bigN * constK * T
     delta_t = 0.001
     h = 1.0 / Real(bigN)
@@ -34,10 +34,6 @@ program predatorPrey
     enddo
     D = (constK / (h*h)) * D
     
-    open(unit = 21, file = 'outfileD.txt', action = 'write')
-    write (21,*) D
-    close(21)
-
     ! Init box vectors
     Predator = 0.1
     Prey = 0.2
