@@ -3,11 +3,11 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(kind=wp), allocatable :: Predator(:), Prey(:), D(:,:)
-    integer :: n, bigN, i, j, sum, t0 = 0, T = 15, cpuT1, cpuT2
-    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    integer :: steps, boxes, i, j, sum, t0 = 0, T = 15, cpuT1, cpuT2
+    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, dt, h
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
-    namelist/ spatial_parameters/ kappaInverted, bigN
+    namelist/ spatial_parameters/ kappaInverted, boxes
     namelist/ time_parameters/ tZero, T, dt
     
     open(unit = 22, file = 'predatorprey.nml', action = 'read')
@@ -19,12 +19,15 @@ program predatorPrey
     constK = 1 / real(kappaInverted)
     t0 = tZero
 
-    ! 2. Task should be satisfied by this
-    n = 4 * bigN*bigN * constK * T
-    delta_t = 0.001
-    h = 1.0 / Real(bigN)
+    steps = (T - tZero) / dt
+    h = 1.0 / Real(boxes)
 
-    print *, 'n = ', n
+    if (steps < 2 * boxes * boxes * constK * T) then
+        print *, 'steps too low!'
+        steps = 2 * boxes * boxes * constK * T
+    endif
+
+    print *, 'n = ', steps
     print *, 'h = ', h
     print *, 'kappa = ', constK
     print *, 'D mult = ', (constK / (h*h))
@@ -32,15 +35,15 @@ program predatorPrey
 
     call cpu_time(t1)
 
-    allocate(Predator(bigN))
-    allocate(Prey(bigN))
-    allocate(D(bigN,bigN))
+    allocate(Predator(boxes))
+    allocate(Prey(boxes))
+    allocate(D(boxes,boxes))
 
     D = 0
-    do i = 1, bigN
-        do j = 1, bigN
+    do i = 1, boxes
+        do j = 1, boxes
             if (i == j) then
-                if (i == 1 .OR. i == bigN) then
+                if (i == 1 .OR. i == boxes) then
                     D(i,j) = -1
                 else
                     D(i,j) = -2
@@ -60,16 +63,16 @@ program predatorPrey
     Predator = 0.1
     Prey = 0.2
 
-    do i = 1, bigN
-        Prey(i) = i / Real(bigN) * 0.1
-        Predator(i) = i / Real(bigN) * 0.1 + 0.2
+    do i = 1, boxes
+        Prey(i) = i / Real(boxes) * 0.1
+        Predator(i) = i / Real(boxes) * 0.1 + 0.2
     enddo
 
     ! time loop
-    do i = 1, n
+    do i = 1, steps
         ! predator prey \w diffusion
-        Prey = Prey + delta_T * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
-        Predator = Predator + delta_T * (MATMUL(D, Predator) + Predator * (delta * Prey - gamma - mu * Predator))
+        Prey = Prey + dt * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
+        Predator = Predator + dt * (MATMUL(D, Predator) + Predator * (delta * Prey - gamma - mu * Predator))
     enddo
 
     call cpu_time(t2)

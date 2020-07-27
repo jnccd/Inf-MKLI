@@ -9,10 +9,10 @@ mu = 0.0
 /
 &spatial_parameters
 kappaInverted = 1000
-bigN = 400
+boxes = 400
 /
 &time_parameters
 tZero = 0.0
 T = 10
-dt = 0.1
+dt = 0.001
 /
