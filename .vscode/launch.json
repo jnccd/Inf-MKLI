@@ -1,32 +1,39 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
-       {
-           "name": ".NET Core ex 3",
-           "type": "coreclr",
-           "request": "launch",
-           "preLaunchTask": "build ex3",
-           "program": "${workspaceFolder}/ex3/c#/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Aktuelle Datei",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": ".NET Core ex 3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build ex3",
+            "program": "${workspaceFolder}/ex3/c#/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
             "args": [],
             "cwd": "${workspaceFolder}/ex3/c#",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
-       },
-       {
-        "name": ".NET Core ex 4",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build ex4",
-        "program": "${workspaceFolder}/ex4/c#/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
-         "args": [],
-         "cwd": "${workspaceFolder}/ex4/c#",
-         // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-         "console": "internalConsole",
-         "stopAtEntry": false
-    }
+        },
+        {
+            "name": ".NET Core ex 4",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build ex4",
+            "program": "${workspaceFolder}/ex4/c#/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/ex4/c#",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
     ]
 }

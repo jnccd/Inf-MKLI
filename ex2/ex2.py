@@ -10,25 +10,26 @@ def t(i, t0, delta_t):
 def timeLoop(phi, f, t0, T, y0, p, n):
     yk = y0
     delta_t = (T - t0) / n
-    for k in range(0, n):
+    yield (t0, y0)
+    for k in range(1, n):
         yk_next = []
         curT = t(k, t0, delta_t)
-        phiout = phi(curT, yk, f, delta_t)
+        phiout = phi(curT, yk, f, curT, delta_t, p)
         for i in range(0, yk.__len__()):
             yk_next.append(yk[i] + delta_t * phiout[i])
         yield (curT, yk_next)
         yk = yk_next
 
 # Change this to swap algs
-algId = 1
+algId = 2
 
 if algId == 0:
     # Energy Balance Model
-    c1 = 1 / (4*const.C)
+    c1 = 1 / (4*const.C) * const.S * (1 - const.albedo)
     c2 = const.boltz * const.emissivity / const.C
     loopRe = timeLoop(
-        phi=lambda t, yk, f, delta_t: f(yk, t), 
-        f=lambda y, t: [c1 * const.S * (1 - const.albedo) - c2 * np.power(y[0], 4)], 
+        phi=lambda t, yk, f, tk, delta_t, p: f(yk, t, p), 
+        f=lambda y, t, p: [c1 - c2 * np.power(y[0], 4)], 
         t0=0, T=50000000, y0=[20], p=[], n=1000)
     ys = list(loopRe)
     plotTitle = "Energy Balance Model"
@@ -42,26 +43,33 @@ if algId == 1:
     delta = 2.1
     half_life = 0.1
     mu = 0.1
-    loopRe = timeLoop(phi=lambda t, yk, f, delta_t: f(yk, t), 
-                      f=lambda y, t: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
-                                      y[1] * (delta * y[0] - gamma - mu * y[1])], 
+    loopRe = timeLoop(phi=lambda t, yk, f, tk, delta_t, p: f(yk, t, p), 
+                      f=lambda y, t, p: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
+                                         y[1] * (delta * y[0] - gamma - mu * y[1])], 
                       t0=0, T=50, y0=[1, 2], p=[], n=2000)
     ys = list(loopRe)
     plotTitle = "Predator Prey Model"
     plotXLabel = "Time in days since first measurement"
     plotYLabel = "Population Count"
 if algId == 2:
-    # predator-prey model 2: electric bogaloo
+    # predator-prey model 2: improved Euler
+    def improvedEuler(t, yk, f, tk, delta_t, p):
+        halfStep = list(map(lambda x: delta_t * 0.5 * x, f(yk, t, p)))
+        yHalf = []
+        for i in range(0, yk.__len__()):
+            yHalf.append(yk[i] + halfStep[i])
+        return f(yHalf, tk, p)
+
     alpha = 1.2
     beta = 1.2
     gamma = 1.1
     delta = 2.1
     half_life = 0.1
     mu = 0.1
-    loopRe = timeLoop(phi=lambda t, yk, f, delta_t: list(map(lambda x: x * 2, f(yk, t))), 
-                      f=lambda y, t: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
-                                      y[1] * (delta * y[0] - gamma - mu * y[1])], 
-                      t0=0, T=50, y0=[1, 2], p=[], n=1000)
+    loopRe = timeLoop(phi=lambda t, yk, f, tk, delta_t, p: improvedEuler(t, yk, f, tk, delta_t, p), 
+                      f=lambda y, t, p: [y[0] * (alpha - beta * y[1] - half_life * y[0]),
+                                         y[1] * (delta * y[0] - gamma - mu * y[1])], 
+                      t0=0, T=50, y0=[1, 2], p=[], n=2000)
     ys = list(loopRe)
     plotTitle = "Predator Prey Model 2"
     plotXLabel = "Time in days since first measurement"
