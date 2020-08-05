@@ -58,7 +58,7 @@ if algId == 2:
         yHalf = []
         for i in range(0, yk.__len__()):
             yHalf.append(yk[i] + halfStep[i])
-        return f(yHalf, tk, p)
+        return f(yHalf, tk + delta_t / 2, p)
 
     alpha = 1.2
     beta = 1.2
