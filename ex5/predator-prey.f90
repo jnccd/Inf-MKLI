@@ -24,11 +24,14 @@ program predatorPrey
 
     if (steps < 2 * boxes * boxes * constK * T) then
         print *, 'steps too low!'
-        steps = 2 * boxes * boxes * constK * T
+        call EXIT(0)
     endif
 
     print *, 'n = ', steps
-    print *, 'h = ', h
+    print *, 'N = ', boxes
+    print *, 't0 = ', tZero
+    print *, 'T = ', T
+    print *, 'dt = ', dt
     print *, 'kappa = ', constK
     print *, 'D mult = ', (constK / (h*h))
     print *, 'wp = ', wp
