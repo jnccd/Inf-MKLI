@@ -2,12 +2,12 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(16), allocatable :: Predator(:), Prey(:), D(:,:)
-    integer :: n, bigN, i, j, sum, t0 = 0, T = 15
+    integer :: n, bigN, i, j, sum, t0 = 0, T = 5
     real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
     
     bigN = 200
     n = 4 * bigN*bigN * constK * T
-    delta_t = 0.001
+    delta_t = Real(T - t0) / n
     h = 1.0 / Real(bigN)
 
     print *, n

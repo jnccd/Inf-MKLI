@@ -1,0 +1,1 @@
+gfortran predator-prey.f90 -o predator-prey.exe -fbounds-check && ./predator-prey.exe
