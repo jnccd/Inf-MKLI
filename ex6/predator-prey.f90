@@ -5,7 +5,7 @@ program predatorPrey
     CHARACTER(LEN=15) :: arg
     real(kind=wp), allocatable :: Predator(:), Prey(:), D(:,:), tmp(:)
     integer :: n, bigN, i, j, sum, t0 = 0, T = 15
-    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h, dt
     real :: cpuT1, cpuT2, t1, t2
     INTEGER*8 :: st1, st2
 
@@ -22,8 +22,8 @@ program predatorPrey
     constK = 1 / real(kappaInverted)
     t0 = tZero
 
-    n = 4 * bigN*bigN * constK * T
-    delta_t = 0.001
+    n = (T - tZero) / dt
+    delta_t = dt
     h = 1.0 / Real(bigN)
 
     print *, 'n = ', n
@@ -67,14 +67,33 @@ program predatorPrey
 
     ! time loop, predator prey \w diffusion
     do i = 1, n
-        tmp = MATMUL(D, Prey)
+        ! MATMUL(D, Prey)
+        !$OMP PARALLEL DO num_threads(4)
+        do j = 1, bigN
+            tmp(j) = 0
+            do k = 1, bigN
+                tmp(j) = tmp(j) + D(j, k) * Prey(j)
+            enddo
+        enddo
+        !$OMP END PARALLEL DO
+
         !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Prey(j) = Prey(j) + delta_T * (tmp(j) + Prey(j) * (alpha - beta * Predator(j) - lambda * Prey(j)))
             end do
         !$OMP END PARALLEL DO
         
-        tmp = MATMUL(D, Predator)
+        ! MATMUL(D, Predator)
+        tmp = 0
+        !$OMP PARALLEL DO num_threads(4)
+        do j = 1, bigN
+            tmp(j) = 0
+            do k = 1, bigN
+                tmp(j) = tmp(j) + D(j, k) * Predator(j)
+            enddo
+        enddo
+        !$OMP END PARALLEL DO
+
         !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Predator(j) = Predator(j) + delta_T * (tmp(j) + Predator(j) * (delta * Prey(j) - gamma - mu * Predator(j)))
