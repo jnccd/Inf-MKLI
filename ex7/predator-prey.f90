@@ -2,14 +2,14 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(16), allocatable :: Predator(:), Prey(:), LastPredator(:), LastPrey(:), D(:,:), DiffPredator(:), DiffPrey(:)
-    integer :: n, bigN, i, j, sum, t0 = 0, T = 15
-    real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 1, mu = 1, constK = 0.1, epsilon = 0.0001, delta_T, h
+    integer :: n, bigN, i, j, sum, t0 = 0, T = 45
+    real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 1, mu = 1, constK = 0.001, delta_T, h, epsilon = 0.0001
     real(16), parameter :: PI_16 = 4 * atan (1.0_16)
     logical :: improvedEuler = .true.
     
     bigN = 100
-    n = 10000
-    delta_t = 0.0001
+    delta_T = 0.0001
+    n = (T - t0) / delta_T
     h = 1.0 / Real(bigN)
 
     print *, n
@@ -66,12 +66,16 @@ program predatorPrey
         DiffPredator(i) = sqrt(sum((Predator - LastPredator)**2))
         DiffPrey(i) = sqrt(sum((Prey - LastPrey)**2))
 
+        if (MODULO(i, 15) == 0) then
+            print *, DiffPredator(i)
+        endif
+
         if (i >= 4 .and. DiffPredator(i) < epsilon .and. DiffPredator(i - 1) < epsilon) then
-            print *, "DiffPredator too smol after ", i, "steps"
+            print *, "DiffPredator too small after ", i, "steps"
             exit
         endif
         if (i >= 4 .and. DiffPrey(i) < epsilon .and. DiffPrey(i - 1) < epsilon) then
-            print *, "DiffPrey too smol after ", i, "steps"
+            print *, "DiffPrey too small after ", i, "steps"
             exit
         endif
     enddo
