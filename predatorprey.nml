@@ -1,6 +1,6 @@
 ! namelist for numerical simulation of the predator prey model
 &model_parameters
-alpha = 8.0
+alpha = 5.0
 beta = 10.0
 gamma = 1.0
 delta = 3.0
@@ -9,7 +9,7 @@ mu = 2.0
 /
 &spatial_parameters
 kappaInverted = 1000
-bigN = 1
+bigN = 400
 /
 &time_parameters
 tZero = 0.0

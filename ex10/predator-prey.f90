@@ -2,9 +2,8 @@ program predatorPrey
     use mod_precision
     
     CHARACTER(LEN=15) :: arg
-    real(kind=wp), allocatable :: Predator(:), Prey(:), LastPredator(:), LastPrey(:)
     integer :: n, bigN, i, j, sum, t0 = 0, T = 20, cpuT1, cpuT2
-    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h, Predator, Prey, LastPredator, LastPrey
     logical :: improvedEuler = .true.
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
@@ -26,16 +25,9 @@ program predatorPrey
     print *, 'delta_t = ', delta_t
     print *, 'alpha = ', alpha
 
-    allocate(Predator(bigN))
-    allocate(Prey(bigN))
-    allocate(LastPredator(bigN))
-    allocate(LastPrey(bigN))
-
     ! Init box vectors
     Predator = 1
-    do i = 1, bigN
-        Prey(i) = sin(i / Real(bigN) * PI_16)
-    enddo
+    Prey = 0.5
 
     ! time loop
     do i = 2, n

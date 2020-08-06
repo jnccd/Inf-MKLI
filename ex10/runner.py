@@ -14,7 +14,7 @@ mu = 2.0
 /
 &spatial_parameters
 kappaInverted = 1000
-bigN = 400
+bigN = 1
 /
 &time_parameters
 tZero = 0.0
@@ -23,7 +23,7 @@ dt = 0.01
 /
 '''
 
-intrStart = 5
+intrStart = 4.5
 intrEnd = 8
 runs = 200
 outFileText = []
