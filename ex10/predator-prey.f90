@@ -3,7 +3,8 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     integer :: n, bigN, i, j, sum, t0 = 0, T = 20, cpuT1, cpuT2
-    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h, Predator, Prey, LastPredator, LastPrey
+    real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h, 
+    real(kind=wp) :: Predator, Prey, LastPredator, LastPrey
     logical :: improvedEuler = .true.
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
