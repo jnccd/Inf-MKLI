@@ -1,1 +1,2 @@
 gfortran predator-prey.f90 -o predator-prey.exe -fbounds-check && ./predator-prey.exe
+gfortran -fbounds-check -O1 predator-prey.f90 -o predator-prey.exe && ./predator-prey.exe && cd c# && dotnet run && cd ..

@@ -1,2 +1,3 @@
 gfortran predator-prey.f90 -o predator-prey.exe -fbounds-check && ./predator-prey.exe
 OMP_NUM_THREADS=4 && gfortran -fbounds-check -fopenmp predator-prey.f90 -o predator-prey.exe && ./predator-prey.exe
+gfortran -fbounds-check -fopenmp -O1 predator-prey.f90 -o predator-prey.exe && ./predator-prey.exe && cd c# && dotnet run && cd ..
