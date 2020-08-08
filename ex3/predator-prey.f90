@@ -2,8 +2,8 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(16), allocatable :: Predator(:), Prey(:)
-    integer :: n, i, j, sum, t0 = 0, T = 50
-    real(16) :: t1, t2, alpha = 1.2, beta = 1.2, gamma = 1.1, delta = 2.1, half_life = 0.1, mu = 0.1, delta_T
+    integer :: n, i, j, sum, t0 = 0, T = 25
+    real(16) :: t1, t2, alpha = 1.5, beta = 3, gamma = 0.3, delta = 0.9, lambda = 0.1, mu = 0.2, delta_T
     
     CALL get_command_argument(1, arg)
     read(arg , *) n
@@ -22,9 +22,8 @@ program predatorPrey
 
     ! explicit euler loop
     do i = 2, n
-        Predator(i) = Predator(i - 1) + delta_T * Predator(i - 1) * (alpha - beta * Prey(i - 1) - half_life * Predator(i - 1))
-        
-        Prey(i) = Prey(i - 1) + delta_T * Prey(i - 1) * (delta * Predator(i - 1) - gamma - mu * Prey(i - 1))
+        Prey(i) = Prey(i-1) + delta_T * (Prey(i-1) * (alpha - beta * Predator(i-1) - lambda * Prey(i-1)))
+        Predator(i) = Predator(i-1) + delta_T * (Predator(i-1) * (delta * Prey(i-1) - gamma - mu * Predator(i-1)))
     enddo
     
     ! write output

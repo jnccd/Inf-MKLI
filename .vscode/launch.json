@@ -4,6 +4,17 @@
     // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": ".NET Core Launch (console)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${file}/bin/Debug/netcoreapp3.1/coreFormsTest.dll",
+        "args": [],
+        "cwd": "${file}",
+        "stopAtEntry": false,
+        "console": "internalConsole"
+    },
         {
             "name": "Python: Aktuelle Datei",
             "type": "python",

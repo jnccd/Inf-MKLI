@@ -16,7 +16,7 @@ namespace coreFormsTest
 {
     public partial class Form1 : Form
     {
-        readonly string outPath = "../ppoutfile.txt";
+        readonly string outPath = "../pp.txt";
         FormsPlot formsPlot1 = new FormsPlot();
 
         public Form1()
@@ -34,11 +34,23 @@ namespace coreFormsTest
 
             var predator = rawPredator.Split(" ").
                 Where(x => !string.IsNullOrWhiteSpace(x)).
-                Select(x => Convert.ToDouble(x)).ToArray();
+                Select(x => { 
+                    try {
+                        return Convert.ToDouble(x);
+                    } catch {
+                        return 0.0;
+                    }
+                }).ToArray();
 
             var prey = rawPrey.Split(" ").
                 Where(x => !string.IsNullOrWhiteSpace(x)).
-                Select(x => Convert.ToDouble(x)).ToArray();
+                Select(x => { 
+                    try {
+                        return Convert.ToDouble(x);
+                    } catch {
+                        return 0.0;
+                    }
+                }).ToArray();
 
             var enumeration = Enumerable.Range(0, prey.Length).
                 Select(x => Convert.ToDouble(x)).
