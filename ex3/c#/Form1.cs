@@ -68,8 +68,8 @@ namespace coreFormsTest
             plt.Legend();
 
             plt.Title("Predator Prey Model");
-            plt.YLabel("Output");
-            plt.XLabel("Data Enumeration");
+            plt.YLabel("Population");
+            plt.XLabel("Time");
 
             formsPlot1.Reset(plt);
 
