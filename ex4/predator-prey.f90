@@ -1,9 +1,9 @@
 program predatorPrey
     
     CHARACTER(LEN=15) :: arg
-    real(16), allocatable :: Predator(:), Prey(:), D(:,:)
+    real(8), allocatable :: Predator(:), Prey(:), D(:,:)
     integer :: n, bigN, i, j, sum, t0 = 0, T = 5
-    real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    real(8) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
     
     bigN = 200
     n = 4 * bigN*bigN * constK * T
@@ -20,23 +20,25 @@ program predatorPrey
 
     D = 0
     do i = 1, bigN
-        do j = 1, bigN
-            if (i == j) then
-                if (i == 1 .OR. i == bigN) then
-                    D(i,j) = -1
-                else
-                    D(i,j) = -2
-                endif
-            else if (i - 1 == j .OR. j - 1 == i) then
-                D(i,j) = 1
-            endif
-        enddo
+        if (i == 1) then
+            D(i,i) = -1
+            D(i,i+1) = 1
+        else if (i == bigN) then
+            D(i,i) = -1
+            D(i,i-1) = 1
+        else
+            D(i,i) = -2
+            D(i,i+1) = 1
+            D(i,i-1) = 1
+        endif
     enddo
     D = (constK / (h*h)) * D
     
     ! Init box vectors
     Predator = 0.1
-    Prey = 0.2
+    do i = 1, bigN
+        Prey(i) = (i / bigN) * 0.2
+    enddo
 
     do i = 1, bigN
         Prey(i) = i / Real(bigN) * 0.1

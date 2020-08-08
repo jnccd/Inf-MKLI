@@ -39,17 +39,17 @@ program predatorPrey
 
     D = 0
     do i = 1, bigN
-        do j = 1, bigN
-            if (i == j) then
-                if (i == 1 .OR. i == bigN) then
-                    D(i,j) = -1
-                else
-                    D(i,j) = -2
-                endif
-            else if (i - 1 == j .OR. j - 1 == i) then
-                D(i,j) = 1
-            endif
-        enddo
+        if (i == 1) then
+            D(i,i) = -1
+            D(i,i+1) = 1
+        else if (i == bigN) then
+            D(i,i) = -1
+            D(i,i-1) = 1
+        else
+            D(i,i) = -2
+            D(i,i+1) = 1
+            D(i,i-1) = 1
+        endif
     enddo
     D = (constK / (h*h)) * D
     
