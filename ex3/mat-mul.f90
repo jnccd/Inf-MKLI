@@ -18,8 +18,8 @@ program mkliMatMul
     
     call cpu_time(t1)
     
-    do j = 1, n
-        do i = 1, n
+    do i = 1, n
+        do j = 1, n
             R(i) = R(i) + A(j, i) * x(j)
         enddo
     enddo
@@ -27,10 +27,6 @@ program mkliMatMul
     !R = MATMUL(A, x)
   
     call cpu_time(t2)
-    
-    !do i=1,size(A,1)
-    !    write(*,'(20G12.4)') A(i,:)
-    !end do 
     
     write(*,*) 'cputime = ', t2-t1
     
