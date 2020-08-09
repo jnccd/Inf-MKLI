@@ -77,6 +77,7 @@ program predatorPrey
         enddo
         !$OMP END PARALLEL DO
 
+        ! Prey Update
         !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Prey(j) = Prey(j) + delta_T * (tmp(j) + Prey(j) * (alpha - beta * Predator(j) - lambda * Prey(j)))
@@ -93,6 +94,7 @@ program predatorPrey
         enddo
         !$OMP END PARALLEL DO
 
+        ! Predator Update
         !$OMP PARALLEL DO num_threads(4)
             do j = 1, bigN
                 Predator(j) = Predator(j) + delta_T * (tmp(j) + Predator(j) * (delta * Prey(j) - gamma - mu * Predator(j)))
