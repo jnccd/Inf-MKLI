@@ -32,8 +32,3 @@ fig = plt.figure()
 ax = fig.gca(projection='3d')
 ax.plot_trisurf(plotData1, plotData2, plotData3, cmap=cm.get_cmap("Spectral"), linewidth=0.2)
 plt.show()
- 
-# to Add a color bar which maps values to colors.
-surf=ax.plot_trisurf(plotData1, plotData2, plotData3, cmap=cm.get_cmap("Spectral"), linewidth=0.2)
-fig.colorbar( surf, shrink=0.5, aspect=5)
-plt.show()

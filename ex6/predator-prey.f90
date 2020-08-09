@@ -75,7 +75,7 @@ program predatorPrey
 
     ! time loop, predator prey \w diffusion
     do i = 1, n
-        ! MATMUL(D, Prey)
+        ! tmp = MATMUL(D, Prey)
         tmp = 0
         !$OMP PARALLEL DO num_threads(4)
         do j = 1, bigN
@@ -92,7 +92,7 @@ program predatorPrey
             end do
         !$OMP END PARALLEL DO
         
-        ! MATMUL(D, Predator)
+        ! tmp = MATMUL(D, Predator)
         tmp = 0
         !$OMP PARALLEL DO num_threads(4)
         do j = 1, bigN
