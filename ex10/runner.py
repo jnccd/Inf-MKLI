@@ -29,15 +29,15 @@ runs = 200
 outFileText = []
 outputVals = []
 
-def getAlpha(int):
-    return intrStart * (1 - (int / (runs - 1))) + intrEnd * (int / (runs - 1))
+def getAlpha(i):
+    return intrStart * (1 - (i / (runs - 1))) + intrEnd * (i / (runs - 1))
 
 # ensemble runs 
 for i in range(runs):
     with open('predatorprey.nml', 'w') as filetowrite:
         filetowrite.write(createNamefileString(str(getAlpha(i))))
 
-    p = subprocess.Popen('predator-prey.exe', 0)
+    p = subprocess.Popen('predator-prey.exe')
     p.wait()
 
     with open('outfile.txt', 'r') as myfile:
