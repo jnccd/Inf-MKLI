@@ -3,11 +3,11 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(kind=wp), allocatable :: Predator(:), Prey(:), D(:,:)
-    integer :: steps, boxes, i, j, sum, t0 = 0, T = 15, cpuT1, cpuT2
+    integer :: n, bigN, i, j, sum, t0 = 0, T = 15, cpuT1, cpuT2
     real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, dt, h
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
-    namelist/ spatial_parameters/ kappaInverted, boxes
+    namelist/ spatial_parameters/ kappaInverted, bigN
     namelist/ time_parameters/ tZero, T, dt
     
     open(unit = 22, file = 'predatorprey.nml', action = 'read')
@@ -19,16 +19,16 @@ program predatorPrey
     constK = 1 / real(kappaInverted)
     t0 = tZero
 
-    steps = (T - tZero) / dt
-    h = 1.0 / Real(boxes)
+    n = (T - tZero) / dt
+    h = 1.0 / Real(bigN)
 
-    if (steps < 2 * boxes * boxes * constK * T) then
+    if (n < 2 * bigN*bigN * constK * T) then
         print *, 'steps too low!'
         call EXIT(0)
     endif
 
-    print *, 'n = ', steps
-    print *, 'N = ', boxes
+    print *, 'n = ', n
+    print *, 'N = ', bigN
     print *, 't0 = ', tZero
     print *, 'T = ', T
     print *, 'dt = ', dt
@@ -38,9 +38,9 @@ program predatorPrey
 
     call cpu_time(t1)
 
-    allocate(Predator(boxes))
-    allocate(Prey(boxes))
-    allocate(D(boxes,boxes))
+    allocate(Predator(bigN))
+    allocate(Prey(bigN))
+    allocate(D(bigN,bigN))
 
     D = 0
     do i = 1, bigN
@@ -58,21 +58,17 @@ program predatorPrey
     enddo
     D = (constK / (h*h)) * D
     
-    open(unit = 21, file = 'outfileD.txt', action = 'write')
-    write (21,*) D
-    close(21)
-
     ! Init box vectors
     Predator = 0.1
     Prey = 0.2
 
-    do i = 1, boxes
-        Prey(i) = i / Real(boxes) * 0.1
-        Predator(i) = i / Real(boxes) * 0.1 + 0.2
+    do i = 1, bigN
+        Prey(i) = i / Real(bigN) * 0.1
+        Predator(i) = i / Real(bigN) * 0.1 + 0.2
     enddo
 
     ! time loop
-    do i = 1, steps
+    do i = 1, n
         ! predator prey \w diffusion
         Prey = Prey + dt * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
         Predator = Predator + dt * (MATMUL(D, Predator) + Predator * (delta * Prey - gamma - mu * Predator))
