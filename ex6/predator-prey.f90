@@ -8,6 +8,7 @@ program predatorPrey
     real(kind=wp) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h, dt
     real :: cpuT1, cpuT2, t1, t2
     INTEGER*8 :: st1, st2
+    logical :: plot3D = .false.
 
     namelist/ model_parameters/ alpha, beta, gamma, delta, lambda, mu
     namelist/ spatial_parameters/ kappaInverted, bigN
@@ -61,6 +62,13 @@ program predatorPrey
         Predator(i) = i / Real(bigN) * 0.1 + 0.2
     enddo
 
+    if (plot3D) then
+        open(unit = 30, file = 'outfile3D.txt', action = 'write')
+        write(30,*) Predator
+        write(30,*) Prey
+        close(30)
+    endif
+
     call cpu_time(cpuT1)
     t1 = omp_get_wtime()
     call system_clock(st1)
@@ -100,6 +108,13 @@ program predatorPrey
                 Predator(j) = Predator(j) + delta_T * (tmp(j) + Predator(j) * (delta * Prey(j) - gamma - mu * Predator(j)))
             end do
         !$OMP END PARALLEL DO
+
+        if (plot3D) then
+            open(unit = 30, file = 'outfile3D.txt', action = 'write', position='append')
+            write(30,*) Predator
+            write(30,*) Prey
+            close(30)
+        endif
     enddo
 
     call system_clock(st2)
