@@ -2,10 +2,10 @@ program predatorPrey
     
     CHARACTER(LEN=15) :: arg
     real(8), allocatable :: Predator(:), Prey(:), D(:,:)
-    integer :: n, bigN, i, j, sum, t0 = 0, T = 5
-    real(8) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 2, mu = 2, constK = 0.001, delta_T, h
+    integer :: n, bigN, i, j, sum, t0 = 0, T = 50
+    real(8) :: alpha = 1, beta = 2.5, gamma = 1, delta = 1.7, lambda = 0.000002, mu = 0.000002, constK = 0.001, delta_T, h
     
-    bigN = 200
+    bigN = 100
     n = 4 * bigN*bigN * constK * T
     delta_t = Real(T - t0) / n
     h = 1.0 / Real(bigN)
@@ -35,21 +35,26 @@ program predatorPrey
     D = (constK / (h*h)) * D
     
     ! Init box vectors
-    Predator = 0.1
     do i = 1, bigN
-        Prey(i) = (i / bigN) * 0.2
+        Predator(i) = i / Real(bigN) * 0.1 + 0.2
+        Prey(i) = (bigN - i) / Real(bigN) * 0.3
     enddo
 
-    do i = 1, bigN
-        Prey(i) = i / Real(bigN) * 0.1
-        Predator(i) = i / Real(bigN) * 0.1 + 0.2
-    enddo
+    open(unit = 30, file = 'outfile3D.txt', action = 'write')
+    write(30,*) Predator
+    write(30,*) Prey
+    close(30)
 
     ! time loop
     do i = 1, n
         ! predator prey \w diffusion
-        Prey = Prey + delta_T * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
         Predator = Predator + delta_T * (MATMUL(D, Predator) + Predator * (delta * Prey - gamma - mu * Predator))
+        Prey = Prey + delta_T * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
+        
+        open(unit = 30, file = 'outfile3D.txt', action = 'write', position='append')
+        write(30,*) Predator
+        write(30,*) Prey
+        close(30)
     enddo
     
     ! write results
