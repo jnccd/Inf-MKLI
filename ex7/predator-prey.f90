@@ -6,6 +6,7 @@ program predatorPrey
     real(16) :: alpha = 2, beta = 3, gamma = 1, delta = 3, lambda = 1, mu = 1, constK = 0.001, delta_T, h, epsilon = 0.0001
     real(16), parameter :: PI_16 = 4 * atan (1.0_16)
     logical :: improvedEuler = .true.
+    logical :: plot3D = .false.
     
     bigN = 100
     delta_T = 0.0001
@@ -46,6 +47,13 @@ program predatorPrey
         Prey(i) = sin(i / Real(bigN) * PI_16)
     enddo
 
+    if (plot3D) then
+        open(unit = 30, file = 'outfile3D.txt', action = 'write')
+        write(30,*) Predator
+        write(30,*) Prey
+        close(30)
+    endif
+
     ! time loop
     do i = 2, n
         LastPredator = Predator
@@ -62,12 +70,19 @@ program predatorPrey
             Predator = Predator + delta_T * (MATMUL(D, Predator) + Predator * (delta * Prey - gamma - mu * Predator))
             Prey = Prey + delta_T * (MATMUL(D, Prey) + Prey * (alpha - beta * Predator - lambda * Prey))
         endif
+
+        if (plot3D) then
+            open(unit = 30, file = 'outfile3D.txt', action = 'write', position='append')
+            write(30,*) Predator
+            write(30,*) Prey
+            close(30)
+        endif
         
         DiffPredator(i) = sqrt(sum((Predator - LastPredator)**2))
         DiffPrey(i) = sqrt(sum((Prey - LastPrey)**2))
 
         if (MODULO(i, 15) == 0) then
-            print *, DiffPredator(i)
+            print *, "Predator: ", DiffPredator(i), " Prey: ", DiffPrey(i)
         endif
 
         if (i >= 4 .and. DiffPredator(i) < epsilon .and. DiffPredator(i - 1) < epsilon) then
