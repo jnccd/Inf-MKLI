@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import constants as const
-import util as util
+import util
 
 def t(i, t0, delta_t):
     return t0 + delta_t * i
@@ -75,7 +75,7 @@ if algId == 2:
                         "mu": 0.1,
                       }, n=2000)
     ys = list(loopRe)
-    plotTitle = "Predator Prey Model 2"
+    plotTitle = "Predator Prey Model using improved Euler"
     plotXLabel = "Time in days since first measurement"
     plotYLabel = "Population Count"
 
