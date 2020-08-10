@@ -14,12 +14,12 @@ using System.Threading;
 
 namespace coreFormsTest
 {
-    public partial class Form1 : Form
+    public partial class Form : System.Windows.Forms.Form
     {
         readonly string outPath = "../outfile.txt";
-        FormsPlot formsPlot1 = new FormsPlot();
+        FormsPlot formsPlot = new FormsPlot();
 
-        public Form1()
+        public Form()
         {
             InitializeComponent();
         }
@@ -44,9 +44,9 @@ namespace coreFormsTest
                 Select(x => Convert.ToDouble(x)).
                 ToArray();
 
-            formsPlot1.Dock = DockStyle.Fill;
-            formsPlot1.Location = new Point(0, 0);
-            formsPlot1.Name = "formsPlot1";
+            formsPlot.Dock = DockStyle.Fill;
+            formsPlot.Location = new Point(0, 0);
+            formsPlot.Name = "formsPlot1";
             this.Text = "Predator Prey Model Viewer";
 
             Plot plt = new Plot();
@@ -59,9 +59,9 @@ namespace coreFormsTest
             plt.YLabel("Output");
             plt.XLabel("Boxes");
 
-            formsPlot1.Reset(plt);
+            formsPlot.Reset(plt);
 
-            Controls.Add(formsPlot1);
+            Controls.Add(formsPlot);
         }
     }
 }

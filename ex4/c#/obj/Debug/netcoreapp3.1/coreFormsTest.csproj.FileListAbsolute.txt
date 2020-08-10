@@ -85,7 +85,6 @@ D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\bin\Debug\netcoreapp3.1\runtimes
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\bin\Debug\netcoreapp3.1\runtimes\osx-x64\native\libpng16.16.dylib
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\bin\Debug\netcoreapp3.1\runtimes\osx-x64\native\libtiff.5.dylib
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.csprojAssemblyReference.cache
-D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.Form1.resources
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.csproj.GenerateResource.cache
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.AssemblyInfoInputs.cache
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.AssemblyInfo.cs
@@ -94,3 +93,4 @@ D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreForm
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.dll
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.pdb
 D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.genruntimeconfig.cache
+D:\Eigene-Dateien\Programmieren\Git\mkli\ex4\c#\obj\Debug\netcoreapp3.1\coreFormsTest.Form.resources
