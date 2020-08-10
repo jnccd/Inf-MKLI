@@ -21,7 +21,7 @@ def timeLoop(phi, f, t0, T, y0, p, n):
         yk = yk_next
 
 # Change this to swap algs
-algId = 2
+algId = 1
 
 if algId == 0:
     # Energy Balance Model
@@ -56,14 +56,14 @@ if algId == 1:
     plotYLabel = "Population Count"
 if algId == 2:
     # predator-prey model 2: improved Euler
-    def improvedEuler(t, yk, f, tk, delta_t, p):
+    def improvedEuler(yk, t, f, tk, delta_t, p):
         halfStep = list(map(lambda x: delta_t * 0.5 * x, f(yk, t, p)))
         yHalf = []
         for i in range(0, yk.__len__()):
             yHalf.append(yk[i] + halfStep[i])
         return f(yHalf, tk + delta_t / 2, p)
 
-    loopRe = timeLoop(phi=lambda t, yk, f, tk, delta_t, p: improvedEuler(t, yk, f, tk, delta_t, p), 
+    loopRe = timeLoop(phi=lambda t, yk, f, tk, delta_t, p: improvedEuler(yk, t, f, tk, delta_t, p), 
                       f=lambda y, t, p: [y[0] * (p["alpha"] - p["beta"] * y[1] - p["half_life"] * y[0]),
                                          y[1] * (p["delta"] * y[0] - p["gamma"] - p["mu"] * y[1])], 
                       t0=0, T=50, y0=[1, 2], p={
