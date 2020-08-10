@@ -3,7 +3,7 @@ program predatorPrey
     CHARACTER(LEN=15) :: arg
     real(16), allocatable :: Predator(:), Prey(:)
     integer :: n, i, j, sum, t0 = 0, T = 25
-    real(16) :: t1, t2, alpha = 1.5, beta = 3, gamma = 0.3, delta = 0.9, lambda = 0.1, mu = 0.2, delta_T
+    real(16) :: t1, t2, alpha = 1.2, beta = 1.2, gamma = 1.1, delta = 2.1, lambda = 0.1, mu = 0.1, delta_T
     
     CALL get_command_argument(1, arg)
     read(arg , *) n
