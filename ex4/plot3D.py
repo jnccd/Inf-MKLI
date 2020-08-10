@@ -24,7 +24,7 @@ with open("outfile3D.txt") as tf:
                 j += 1
         i += 1
 
-        if i == 2500:
+        if i == 1600:
             break
 
 # Make the plot
